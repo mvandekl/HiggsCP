@@ -94,7 +94,10 @@ const vector<TString> SUSYGluGluToHToTauTau_2017 = { "SUSYGluGluToHToTauTau" };
 const vector<TString> VBFHToTauTau_2017    = { "VBFHToTauTau_M125"
 					       /* "ZHToTauTau_M125_13TeV_powheg_pythia8",
 					       "WplusHToTauTau_M125_13TeV_powheg_pythia8",
-					       "WminusHToTauTau_M125_13TeV_powheg_pythia8"*/}; 
+					       "WminusHToTauTau_M125_13TeV_powheg_pythia8"*/};
+
+const vector<TString> GluGluHToTauTau_2017_tauspinner = {"GluGluToHToTauTauNoSpin_Unfiltered_Rev1"};
+const vector<TString> VBFHToTauTau_2017_tauspinner = {"VBFHToTauTauNoSpin_Unfiltered_Rev1"};
 
 //the 2017 samples below seem not needed for mu-tau
 const vector<TString> ZHToTauTau_2017      = { "ZHToTauTau_M125" };//seems absent for mutau
@@ -210,7 +213,9 @@ const map<TString, double> xsec_map_2017 = {
   { "WminusHToTauTau_M125" , 0.0358 },
   { "GluGluHToWWTo2L2Nu"                        , 48.6*0.02374 },  // from: https://twiki.cern.ch/twiki/bin/view/LHCPhysics/LHCHXSWG#Higgs_cross_sections_and_decay_b and https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR#H_llll_ll
   { "VBFHToWWTo2L2Nu_M125" , 3.78*0.02374 }, // from: see links above
-  { "ttHToTauTau_M125"         , 0.5071*0.0627 }  // from: see links above
+  { "ttHToTauTau_M125"         , 0.5071*0.0627 },  // from: see links above
+  { "GluGluToHToTauTauNoSpin_Unfiltered_Rev1" , 48.58*0.0627 },
+  { "VBFHToTauTauNoSpin_Unfiltered_Rev1"    , 3.782*0.0627 }
 };
 
 

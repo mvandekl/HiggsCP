@@ -62,20 +62,27 @@ void create_dnn_ntuples_mt( TString era = "2017" , TString channel="mt"){
     embedded_trigger_weight  = 1.00;
     embedded_tracking_weight = 0.99;
     
+/*
     if(channel=="mt"){
+
       samples_map[channel + "-NOMINAL_ntuple_Data"     ] = SingleMuon_Run2017; 
       //samples_map[channel + "-NOMINAL_ntuple_Embedded" ] = EmbeddedMuTau_2017;
     }else{
       samples_map[channel + "-NOMINAL_ntuple_Data"     ] = SingleElectron_Run2017; 
       samples_map[channel + "-NOMINAL_ntuple_Embedded" ] = EmbeddedMuTau_2017;
     }
+
     samples_map[channel + "-NOMINAL_ntuple_DY"       ] = DYJets_2017;  		
     samples_map[channel + "-NOMINAL_ntuple_WJets"    ] = WJets_2017;  		
     samples_map[channel + "-NOMINAL_ntuple_TT"       ] = TTbar_2017;  		
     samples_map[channel + "-NOMINAL_ntuple_SingleTop"] = SingleTop_2017;  	
     samples_map[channel + "-NOMINAL_ntuple_VV"       ] = Diboson_2017;  		
     samples_map[channel + "-NOMINAL_ntuple_ggH"      ] = GluGluHToTauTau_2017; 	
-    samples_map[channel + "-NOMINAL_ntuple_VBF"      ] = VBFHToTauTau_2017;
+    samples_map[channel + "-NOMINAL_ntuple_qqH"      ] = VBFHToTauTau_2017;*/
+
+    samples_map[channel + "-NOMINAL_ntuple_IC_ggH"      ] = GluGluHToTauTau_2017_tauspinner; //2019 5 6: checked 
+//    samples_map[channel + "-NOMINAL_ntuple_IC_qqH"     ] = VBFHToTauTau_2017_tauspinner;
+
     //samples_map[channel + "-NOMINAL_ntuple_CPodd"    ] = SUSYGluGluToHToTauTau_2017;
     //samples_map[channel + "-NOMINAL_ntuple_ZH"       ] = ZHToTauTau_2017; 
     //samples_map[channel + "-NOMINAL_ntuple_WH"       ] = WHToTauTau_2017; 
@@ -83,7 +90,9 @@ void create_dnn_ntuples_mt( TString era = "2017" , TString channel="mt"){
     //samples_map[channel + "-NOMINAL_ntuple_VBFHWW"   ] = VBFHToWW_2017; 
     //samples_map[channel + "-NOMINAL_ntuple_ttH"      ] = ttH_2017; 
       
-    input_dir="/nfs/dust/cms/user/cardinia/HtoTauTau/HiggsCP/DNN/CMSSW_9_4_9/src/DesyTauAnalyses/NTupleMaker/test/mutau/Oleg";
+//    input_dir="/nfs/dust/cms/user/cardinia/HtoTauTau/HiggsCP/DNN/CMSSW_9_4_9/src/DesyTauAnalyses/NTupleMaker/test/mutau/Oleg";
+  input_dir="/nfs/dust/cms/user/klundert/HiggsCPTauProject/DTSoft_2019_11_7/CMSSW_10_2_16/src/DesyTauAnalyses/NTupleMaker/test/mutau_2019_11_11";
+
   }  
   else if(era == "2016"){
     xsec_map    = &xsec_map_2016;
@@ -113,8 +122,7 @@ void create_dnn_ntuples_mt( TString era = "2017" , TString channel="mt"){
     samples_map[channel + "-NOMINAL_ntuple_ggHWW"    ] = ggHToWW_2016;
     samples_map[channel + "-NOMINAL_ntuple_VBFHWW"   ] = VBFHToWW_2016;
     samples_map[channel + "-NOMINAL_ntuple_ttH"      ] = ttH_2016;
-    input_dir="/nfs/dust/cms/user/tlenz/13TeV/2017/CMSSW/2016_legacy/CMSSW_8_0_29/src/DesyTauAnalyses/NTupleMaker/test/HTauTau_EMu_2016/NTuples/ntuples_v5/";
-  
+    input_dir="/nfs/dust/cms/user/tlenz/13TeV/2017/CMSSW/2016_legacy/CMSSW_8_0_29/src/DesyTauAnalyses/NTupleMaker/test/HTauTau_EMu_2016/NTuples/ntuples_v5/";  
   }
 
   // Needed for stitching
@@ -139,7 +147,8 @@ void create_dnn_ntuples_mt( TString era = "2017" , TString channel="mt"){
   double neventsDY3Jets = getNEventsProcessed(input_dir,process_map->at("DY3Jets"));
   double neventsDY4Jets = getNEventsProcessed(input_dir,process_map->at("DY4Jets"));
 
-  TString output_dir = "test/NTuples_"+channel+"_" + era;
+//  TString output_dir = "test/NTuples_"+channel+"_" + era;
+  TString output_dir = "NNtuples_2019_11_12/NTuples_"+channel+"_" + era;
   gSystem -> Exec("mkdir " + output_dir);
 
   TFile* ff_file = TFile::Open("/nfs/dust/cms/user/cardinia/HtoTauTau/HiggsCP/DNN/CMSSW_9_4_9/src/HTTutilities/Jet2TauFakes/data/SM2017/tight/vloose/mt/fakeFactors.root");
