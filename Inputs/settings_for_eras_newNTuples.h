@@ -4,6 +4,7 @@
 // **************************************************************************************************
 // Define the subsamples that belong to a certain process
 // 2018
+
 const vector<TString> SingleMuon_Run2018       = { "SingleMuon_Run2018A",
 						   "SingleMuon_Run2018B", 
 						   "SingleMuon_Run2018C",
@@ -89,15 +90,15 @@ const vector<TString> SingleTop_2017       = { "ST_t-channel_antitop_4f" ,
 const vector<TString> Diboson_2017         = { "WW" ,
 					       "WZ" ,
 					       "ZZ" };
-const vector<TString> GluGluHToTauTau_2017 = { "GluGluHToTauTau_M125" };
+const vector<TString> GluGluHToTauTau_2017 = { "GluGluHToTauTau_M125_ForNormUpdatedSynchTupler_Two" };
 const vector<TString> SUSYGluGluToHToTauTau_2017 = { "SUSYGluGluToHToTauTau" };
-const vector<TString> VBFHToTauTau_2017    = { "VBFHToTauTau_M125"
+const vector<TString> VBFHToTauTau_2017    = { "VBFHToTauTau_M125_ForNormUpdatedSynchTupler_TwoptOne"
 					       /* "ZHToTauTau_M125_13TeV_powheg_pythia8",
 					       "WplusHToTauTau_M125_13TeV_powheg_pythia8",
 					       "WminusHToTauTau_M125_13TeV_powheg_pythia8"*/};
 
-const vector<TString> GluGluHToTauTau_2017_tauspinner = {"GluGluToHToTauTauNoSpin_Unfiltered_Rev1"};
-const vector<TString> VBFHToTauTau_2017_tauspinner = {"VBFHToTauTauNoSpin_Unfiltered_Rev1"};
+const vector<TString> GluGluHToTauTau_2017_tauspinner = {"GluGluToHToTauTauNoSpin_Unfiltered_Rev1_ForNormUpdatedSynchTupler_Two"};
+const vector<TString> VBFHToTauTau_2017_tauspinner = {"VBFHToTauTauNoSpin_Unfiltered_Rev1_ForNormUpdatedSynchTupler_Two"};
 
 //the 2017 samples below seem not needed for mu-tau
 const vector<TString> ZHToTauTau_2017      = { "ZHToTauTau_M125" };//seems absent for mutau
@@ -200,9 +201,9 @@ const map<TString, double> xsec_map_2017 = {
   { "WW" , 75.88 },
   { "WZ" , 27.57 },
   { "ZZ" , 12.14 }, 
-  { "GluGluHToTauTau_M125" , 48.58*0.0627 },
+  { "GluGluHToTauTau_M125_ForNormUpdatedSynchTupler_Two" , 48.58*0.0627 },
   { "SUSYGluGluToHToTauTau" , 48.58*0.0627 },
-  { "VBFHToTauTau_M125"    , 3.782*0.0627 },
+  { "VBFHToTauTau_M125_ForNormUpdatedSynchTupler_TwoptOne"    , 3.782*0.0627 },
   { "EWKWMinus2Jets_WToLNu_M-50" , 23.24 },
   { "EWKWPlus2Jets_WToLNu_M-50" , 29.59 },
   { "WGToLNuG"    , 464.4 },
@@ -214,8 +215,8 @@ const map<TString, double> xsec_map_2017 = {
   { "GluGluHToWWTo2L2Nu"                        , 48.6*0.02374 },  // from: https://twiki.cern.ch/twiki/bin/view/LHCPhysics/LHCHXSWG#Higgs_cross_sections_and_decay_b and https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR#H_llll_ll
   { "VBFHToWWTo2L2Nu_M125" , 3.78*0.02374 }, // from: see links above
   { "ttHToTauTau_M125"         , 0.5071*0.0627 },  // from: see links above
-  { "GluGluToHToTauTauNoSpin_Unfiltered_Rev1" , 48.58*0.0627 },
-  { "VBFHToTauTauNoSpin_Unfiltered_Rev1"    , 3.782*0.0627 }
+  { "GluGluToHToTauTauNoSpin_Unfiltered_Rev1_ForNormUpdatedSynchTupler_Two" , 48.58*0.0627 },
+  { "VBFHToTauTauNoSpin_Unfiltered_Rev1_ForNormUpdatedSynchTupler_Two"    , 3.782*0.0627 }
 };
 
 
@@ -379,13 +380,14 @@ double getNEventsProcessed(TString input_dir, TString sample)
     nevents = n_events_per_sample.at(sample);
   }else if(!sample.Contains("Run")){
     TFile * file = new TFile(input_dir+"/"+sample+".root");
-    TH1D * histWeightsH = (TH1D*)file->Get("nWeightedEvents");
+//    TH1D * histWeightsH = (TH1D*)file->Get("nWeightedEvents"); nWeightedEventsHMiniAOD
+    TH1D * histWeightsH = (TH1D*)file->Get("nWeightedEventsHMiniAOD"); //Merijn: normalise to weights present in mini-aod, not just big tupler..
     if(!histWeightsH){
       cout << endl << endl << "Histogram nWeightedEvents doesn't exist in the file "<< input_dir+"/"+sample+".root" <<". Quit program." << endl << endl;
       exit(-1);
     }
     nevents = histWeightsH->GetSumOfWeights();
-      cout << "WARNING: normalization taken from nWeightedEvents, please check! ";
+      cout << "WARNING: normalization taken from nWeightedEventsHMiniAOD, please check! ";
     file -> Close();
     delete file;
   }else nevents=0;
